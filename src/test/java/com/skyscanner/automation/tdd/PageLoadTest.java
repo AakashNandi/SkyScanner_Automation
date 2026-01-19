@@ -9,3 +9,4 @@ public class PageLoadTest extends BaseTest {
         System.out.println("Page Title = " + driver.getTitle());
     }
 }
+
