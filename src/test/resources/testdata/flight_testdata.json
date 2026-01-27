@@ -1,0 +1,25 @@
+{
+  "TC_01": {
+    "from": "Kolkata",
+    "to": "Delhi",
+    "departureDate": "2026-02-10",
+    "adults": "2",
+    "cabinClass": "Economy"
+  },
+
+  "TC_02": {
+    "from": "Mumbai",
+    "to": "Dubai",
+    "departureDate": "2026-03-05",
+    "adults": "1",
+    "cabinClass": "Business"
+  },
+
+  "TC_03": {
+    "from": "Chennai",
+    "to": "Singapore",
+    "departureDate": "2026-04-15",
+    "adults": "3",
+    "cabinClass": "Economy"
+  }
+}
