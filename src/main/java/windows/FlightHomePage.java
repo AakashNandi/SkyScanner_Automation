@@ -26,12 +26,21 @@ public class FlightHomePage extends BasePage {
     @FindBy(xpath = "//select[contains(@class,'flight_way')]/option")
     List<WebElement> tripTypeOptions;
 
+    // class type dropdown
+    @FindBy(xpath = "//select[@id='flight_type']")
+    WebElement classtypeDropdown;
+
+    // class type options
+    @FindBy(xpath = "//select[@id='flight_type']/options")
+    List<WebElement> classTypeOptions;
+
+
     // From input
-    @FindBy(xpath = "//input[contains(@placeholder,'From')]")
+    @FindBy(xpath = "//input[@name='from']")
     WebElement fromInput;
 
     // To input
-    @FindBy(xpath = "//input[contains(@placeholder,'To')]")
+    @FindBy(xpath = "//input[@name='to']]")
     WebElement toInput;
 
     // Departure date button
@@ -71,16 +80,30 @@ public class FlightHomePage extends BasePage {
         }
     }
 
+
+    public void selectClassType(String cabinClass) {
+        wait.waitForClickable(By.xpath("//select[@id='flight_type']")).click();
+
+        for (WebElement option : classTypeOptions) {
+            String text = option.getText().trim();
+            if (text.equalsIgnoreCase(cabinClass)) {
+                option.click();
+                break;
+            }
+        }
+    }
+
     public void enterFrom(String from) {
-        wait.waitForVisible(By.xpath("//input[contains(@placeholder,'From')]")).clear();
+        wait.waitForVisible(By.xpath("//input[@name='from']")).clear();
         fromInput.sendKeys(from);
 
         By suggestion = By.xpath("//span[contains(text(),'" + from + "')]");
         wait.waitForClickable(suggestion).click();
     }
 
+
     public void enterTo(String to) {
-        wait.waitForVisible(By.xpath("//input[contains(@placeholder,'To')]")).clear();
+        wait.waitForVisible(By.xpath("//input[@name='to']")).clear();
         toInput.sendKeys(to);
 
         By suggestion = By.xpath("//span[contains(text(),'" + to + "')]");

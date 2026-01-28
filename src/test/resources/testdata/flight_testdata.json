@@ -1,5 +1,6 @@
 {
   "TC_01": {
+    "type": "One Way",
     "from": "Kolkata",
     "to": "Delhi",
     "departureDate": "2026-02-10",
@@ -8,14 +9,17 @@
   },
 
   "TC_02": {
+    "type": "Return",
     "from": "Mumbai",
     "to": "Dubai",
     "departureDate": "2026-03-05",
+    "returnDate": "2026-03-08",
     "adults": "1",
     "cabinClass": "Business"
   },
 
   "TC_03": {
+    "type": "One Way",
     "from": "Chennai",
     "to": "Singapore",
     "departureDate": "2026-04-15",

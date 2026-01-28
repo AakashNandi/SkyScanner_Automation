@@ -13,6 +13,7 @@ public class FlightSearchSteps {
 
     FlightHomePage homePage;
 
+    String t_type;
     String from;
     String to;
     String departureDate;
@@ -27,6 +28,7 @@ public class FlightSearchSteps {
 
     @And("user loads flight test data {string}")
     public void loadTestData(String tcId) {
+        t_type = JsonUtil.getData(tcId,"type");
         from = JsonUtil.getData(tcId, "from");
         to = JsonUtil.getData(tcId, "to");
         departureDate = JsonUtil.getData(tcId, "departureDate");
@@ -34,9 +36,10 @@ public class FlightSearchSteps {
         cabinClass = JsonUtil.getData(tcId, "cabinClass");
     }
 
-    @When("user selects One-way trip")
+    @When("user selects trip-type and class")
     public void selectOneWay() {
-        homePage.selectTripType("One Way");
+        homePage.selectTripType(t_type);
+        homePage.selectCabinClass(cabinClass);
     }
 
     @And("user enters From and To locations")
