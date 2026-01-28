@@ -1,4 +1,4 @@
-package core;
+package base_b;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

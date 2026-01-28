@@ -1,14 +1,14 @@
 package steps;
 
-import core.DriverFactory;
+import base_b.DriverFactory;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import pages.FlightHomePage;
-import core.JsonUtil;
+import windows.FlightHomePage;
+import utilities.JsonUtil;
 
 public class FlightSearchSteps {
 

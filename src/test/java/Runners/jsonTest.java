@@ -1,5 +1,6 @@
-package core;
+package Runners;
 
+import utilities.JsonUtil;
 import org.testng.annotations.Test;
 
 public class jsonTest {
