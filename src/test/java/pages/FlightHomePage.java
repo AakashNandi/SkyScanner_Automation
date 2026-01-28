@@ -18,11 +18,12 @@ public class FlightHomePage extends BasePage {
     }
 
     // Trip type dropdown
-    @FindBy(xpath = "//button[@title='Select trip type']")
+    @FindBy(xpath = "//select[contains(@class,'flight_way')]")
     WebElement tripTypeDropdown;
 
+
     // Trip type options (li list)
-    @FindBy(xpath = "//section[@role='dialog']/div/ul/li")
+    @FindBy(xpath = "//select[contains(@class,'flight_way')]/option")
     List<WebElement> tripTypeOptions;
 
     // From input
@@ -54,7 +55,7 @@ public class FlightHomePage extends BasePage {
     // Select trip type dynamically (One-way / Round-trip / Multi-city)
     public void selectTripType(String type) {
         wait.waitForClickable(
-                By.xpath("//button[@title='Select trip type']")
+                By.xpath("//select[contains(@class,'flight_way')]")
         ).click();
 
         for (WebElement option : tripTypeOptions) {

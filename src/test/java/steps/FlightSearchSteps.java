@@ -24,9 +24,7 @@ public class FlightSearchSteps {
         @Given("user is on Skyscanner flights page")
         public void openSkyscanner() {
             driver = DriverFactory.getDriver();
-            driver.get("https://www.skyscanner.co.in");
-           // driver.get("https://www.snitch.com/");
-          //  https://phptravels.net/
+            driver.get("https://phptravels.net/");
             homePage = new FlightHomePage(driver);
         }
 
@@ -41,7 +39,7 @@ public class FlightSearchSteps {
 
         @When("user selects One-way trip")
         public void selectOneWay() {
-            homePage.selectTripType("ONE_WAY");
+            homePage.selectTripType("One Way");
         }
 
         @And("user enters From and To locations")
