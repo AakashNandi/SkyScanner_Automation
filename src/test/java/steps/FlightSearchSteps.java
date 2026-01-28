@@ -39,7 +39,7 @@ public class FlightSearchSteps {
 
         @When("user selects One-way trip")
         public void selectOneWay() {
-            homePage.selectOneWay();
+            homePage.selectTripType("ONE_WAY");
         }
 
         @And("user enters From and To locations")

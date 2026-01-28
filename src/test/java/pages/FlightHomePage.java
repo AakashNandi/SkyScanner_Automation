@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.WaitUtils;
 
+import java.util.List;
+
 public class FlightHomePage extends BasePage{
 
         private WaitUtils wait;
@@ -16,10 +18,16 @@ public class FlightHomePage extends BasePage{
         }
 
         // One-way trip
-        @FindBy(xpath = "//button[contains(.,'One-way')]")   //text anywhere inside it contains One-way
-        WebElement oneWayBtn;
+        //@FindBy(xpath = "//*[@id=\"popoverContainer-TripTypeTopLevel\"]/div[1]/button")
+        @FindBy(xpath = "//button[@title='Select trip type']")
+        WebElement tripTypeDropdown;
 
-        // From input
+
+        @FindBy(xpath = "//section[@id='popover-TripTypeTopLevel']/div/ul/li")
+        List<WebElement> tripTypeOptions;
+
+
+    // From input
         @FindBy(xpath = "//input[contains(@placeholder,'From')]")
         WebElement fromInput;
 
@@ -43,9 +51,22 @@ public class FlightHomePage extends BasePage{
         @FindBy(xpath = "//button[contains(.,'Search')]")
         WebElement searchBtn;
 
-        public void selectOneWay() {
-            oneWayBtn.click();
+        public void selectTripType(String type) {
+        tripTypeDropdown.click();
+
+        for (WebElement option : tripTypeOptions) {
+            String text = option.getText().trim();
+
+            if (text.equalsIgnoreCase(type)) {
+                option.click();
+                break;
+            }
         }
+    }
+
+//        By oneWayOption = By.xpath("//span[contains(text(),'One-way')]");
+//        wait.waitForClickable(oneWayOption).click();
+//        }
 
         public void enterFrom(String from) {
             fromInput.clear();
