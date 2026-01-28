@@ -1,8 +1,8 @@
 package windows;
 
-import base_b.BasePage;
+import base.BasePage;
+import hooks.Hooks;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utilities.WaitUtils;
@@ -13,17 +13,16 @@ public class FlightHomePage extends BasePage {
 
     private WaitUtils wait;
 
-    public FlightHomePage(WebDriver driver) {
-        super(driver);
-        wait = new WaitUtils(driver);
+    public FlightHomePage() {
+        super(Hooks.driver);
+        wait = new WaitUtils(Hooks.driver);
     }
 
     // Trip type dropdown
     @FindBy(xpath = "//select[contains(@class,'flight_way')]")
     WebElement tripTypeDropdown;
 
-
-    // Trip type options (li list)
+    // Trip type options
     @FindBy(xpath = "//select[contains(@class,'flight_way')]/option")
     List<WebElement> tripTypeOptions;
 
@@ -51,17 +50,20 @@ public class FlightHomePage extends BasePage {
     @FindBy(xpath = "//button[contains(.,'Search')]")
     WebElement searchBtn;
 
+    // ========================= VERIFICATION ========================= //
+
+    public void verifyHomeLoaded() {
+        wait.waitForVisible(By.xpath("//button[@role='tab']"));
+        System.out.println("✅ Flight Home Page Loaded Successfully");
+    }
+
     // ========================= ACTION METHODS ========================= //
 
-    // Select trip type dynamically (One-way / Round-trip / Multi-city)
     public void selectTripType(String type) {
-        wait.waitForClickable(
-                By.xpath("//select[contains(@class,'flight_way')]")
-        ).click();
+        wait.waitForClickable(By.xpath("//select[contains(@class,'flight_way')]")).click();
 
         for (WebElement option : tripTypeOptions) {
             String text = option.getText().trim();
-
             if (text.equalsIgnoreCase(type)) {
                 option.click();
                 break;
@@ -69,55 +71,40 @@ public class FlightHomePage extends BasePage {
         }
     }
 
-    // Enter FROM city dynamically
     public void enterFrom(String from) {
-        wait.waitForVisible(
-                By.xpath("//input[contains(@placeholder,'From')]")
-        ).clear();
-
+        wait.waitForVisible(By.xpath("//input[contains(@placeholder,'From')]")).clear();
         fromInput.sendKeys(from);
 
         By suggestion = By.xpath("//span[contains(text(),'" + from + "')]");
         wait.waitForClickable(suggestion).click();
     }
 
-    // Enter TO city dynamically
     public void enterTo(String to) {
-        wait.waitForVisible(
-                By.xpath("//input[contains(@placeholder,'To')]")
-        ).clear();
-
+        wait.waitForVisible(By.xpath("//input[contains(@placeholder,'To')]")).clear();
         toInput.sendKeys(to);
 
         By suggestion = By.xpath("//span[contains(text(),'" + to + "')]");
         wait.waitForClickable(suggestion).click();
     }
 
-    // Select departure date dynamically
     public void selectDepartureDate(String date) {
-        wait.waitForClickable(
-                By.xpath("//button[contains(@data-testid,'depart')]")
-        ).click();
+        wait.waitForClickable(By.xpath("//button[contains(@data-testid,'depart')]")).click();
 
         By dateBtn = By.xpath("//button[@aria-label='" + date + "']");
         wait.waitForClickable(dateBtn).click();
     }
 
-    // Select travellers dynamically (Adults)
     public void selectTravellers(String adults) {
-        wait.waitForClickable(
-                By.xpath("//button[contains(@data-testid,'passengers')]")
-        ).click();
+        wait.waitForClickable(By.xpath("//button[contains(@data-testid,'passengers')]")).click();
 
         int adultCount = Integer.parseInt(adults);
-
         By addAdultBtn = By.xpath("//button[@aria-label='Increase adults']");
+
         for (int i = 1; i < adultCount; i++) {
             wait.waitForClickable(addAdultBtn).click();
         }
     }
 
-    // Select cabin class dynamically
     public void selectCabinClass(String cabinClass) {
         By cabinDropdown = By.xpath("//select");
         wait.waitForClickable(cabinDropdown).click();
@@ -126,17 +113,13 @@ public class FlightHomePage extends BasePage {
         wait.waitForClickable(option).click();
     }
 
-    // Untick Add Hotel checkbox (always)
     public void untickAddHotel() {
         if (addHotelCheckbox.isSelected()) {
             addHotelCheckbox.click();
         }
     }
 
-    // Click Search button
     public void clickSearch() {
-        wait.waitForClickable(
-                By.xpath("//button[contains(.,'Search')]")
-        ).click();
+        wait.waitForClickable(By.xpath("//button[contains(.,'Search')]")).click();
     }
 }

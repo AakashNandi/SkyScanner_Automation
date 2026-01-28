@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
     @CucumberOptions(
             features = "src/test/resources/features",
-            glue = {"steps", "hooks"},
+            glue = {"steps", ""},
             plugin = {"pretty"},
             monochrome = true
     )
