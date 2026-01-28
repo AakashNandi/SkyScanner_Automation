@@ -24,8 +24,9 @@ public class FlightSearchSteps {
         @Given("user is on Skyscanner flights page")
         public void openSkyscanner() {
             driver = DriverFactory.getDriver();
-            //driver.get("https://www.skyscanner.co.in");
-            driver.get("https://www.snitch.com/");
+            driver.get("https://www.skyscanner.co.in");
+           // driver.get("https://www.snitch.com/");
+          //  https://phptravels.net/
             homePage = new FlightHomePage(driver);
         }
 
