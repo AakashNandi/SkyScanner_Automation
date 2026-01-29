@@ -41,7 +41,8 @@ public class FlightSearchSteps {
     @When("user selects trip-type and class")
     public void selectOneWay() {
         homePage.selectTripType(t_type);
-        homePage.selectCabinClass(cabinClass);
+        homePage.selectClassType(cabinClass);
+
     }
 
     @And("user enters From and To locations")
