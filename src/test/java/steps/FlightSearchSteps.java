@@ -19,10 +19,11 @@ public class FlightSearchSteps {
     String to;
     String code_t;
     String departureDate;
+    String returnDate;
     String adults;
     String cabinClass;
 
-    @Given("user is on Skyscanner flights page")
+    @Given("user is on flights site page")
     public void openSkyscanner() {
         homePage = new FlightHomePage(); // Driver comes from Hooks
         homePage.verifyHomeLoaded();
@@ -36,11 +37,12 @@ public class FlightSearchSteps {
         to = JsonUtil.getData(tcId, "to");
         code_t = JsonUtil.getData(tcId, "code_t");
         departureDate = JsonUtil.getData(tcId, "departureDate");
+        returnDate = JsonUtil.getData(tcId, "returnDate");
         adults = JsonUtil.getData(tcId, "adults");
         cabinClass = JsonUtil.getData(tcId, "cabinClass");
     }
 
-    @When("user selects trip-type and class")
+    @When("user selects trip-type and trip class")
     public void selectOneWay() {
         homePage.selectTripType(t_type);
         homePage.selectClassType(cabinClass);
@@ -53,19 +55,20 @@ public class FlightSearchSteps {
         homePage.enterTo(to,code_t);
     }
 
-    @And("user selects departure date")
+    @And("user selects dates")
     public void selectDate() {
-        homePage.selectDepartureDate(departureDate);
+        if ("One way".equalsIgnoreCase(t_type)) {
+            // Select only the departure date for one-way trip
+            homePage.selectDepartureDate(departureDate);
+        } else if ("Return".equalsIgnoreCase(t_type)) {
+            // Select both departure and return dates for multi-way trip
+            homePage.selectDates(departureDate, returnDate);
+        }
     }
 
     @And("user selects travellers and cabin class")
     public void selectPassengers() {
         System.out.println("Adults: " + adults + ", Cabin: " + cabinClass);
-    }
-
-    @And("user unticks Add hotel option")
-    public void untickHotel() {
-        homePage.untickAddHotel();
     }
 
     @And("user clicks search")

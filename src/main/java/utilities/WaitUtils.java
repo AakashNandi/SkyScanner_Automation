@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -45,6 +46,19 @@ public class WaitUtils {
             // Popup not present, safe to continue
         }
        }
+
+//       // Utility method to wait for slow typing (when the input field value changes)
+//       public static void waitForInputToUpdate(WebDriver driver, WebElement inputField, long timeoutInMillis) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(timeoutInMillis));
+//
+//        wait.until(new ExpectedCondition<Boolean>() {
+//            @Override
+//            public Boolean apply(WebDriver driver) {
+//                String currentText = inputField.getAttribute("value");
+//                return currentText.length() > 0 && currentText.length() == currentText.length();
+//            }
+//        });
+//       }
 
       public static void scrollIntoViewCenter(WebElement element) {
         ((JavascriptExecutor) driver)

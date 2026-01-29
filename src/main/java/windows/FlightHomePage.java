@@ -3,21 +3,16 @@ package windows;
 import base.BasePage;
 import hooks.Hooks;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.WaitUtils;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
-
-import static java.lang.Thread.sleep;
-import static org.openqa.selenium.By.xpath;
 
 public class FlightHomePage extends BasePage {
 
@@ -59,12 +54,16 @@ public class FlightHomePage extends BasePage {
 
 
     // To input
-    @FindBy(xpath = "//input[@name='to']]")
+    @FindBy(xpath = "//input[@name='to']")
     WebElement toInput;
 
     // Departure date button
-    @FindBy(xpath = "//button[contains(@data-testid,'depart')]")
-    WebElement departureDateBtn;
+    @FindBy(id = "departure")
+    WebElement departureDateele;
+
+    // Return date button
+    @FindBy(id = "return_date")
+    WebElement returnDateele;
 
     // Travellers button
     @FindBy(xpath = "//button[contains(@data-testid,'passengers')]")
@@ -114,16 +113,65 @@ public class FlightHomePage extends BasePage {
 
     }
 
-    public void enterFrom(String from, String code_f ) {
+    public void enterFrom(String from, String code_f) {
+                WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
 
-        WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+                fromInput.clear();
 
-        fromInput.clear();
-        fromInput.sendKeys(from);
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(500)); // Set explicit wait time
+                // Slow typing: Send each character with an explicit wait for each character typed
+                for (char c : from.toCharArray()) {
+                    fromInput.sendKeys(String.valueOf(c));  // Send one character at a time
 
-       // By resultButtonLocator = By.xpath("//button[contains(normalize-space(),'" + code_f + "')]");
-        By resultButtonLocator = By.xpath(String.format("//button[contains(text(),'%s')]", code_f));
+                    // Wait for the input field value to update (waiting for it to change)
+                    wait.until(new ExpectedCondition<Boolean>() {
+                        public Boolean apply(WebDriver driver) {
+                            // Check if the value of the input field has changed (indicating a new character was typed)
+                            String currentText = fromInput.getAttribute("value");
+                            return currentText.length() > 0 && currentText.length() == fromInput.getAttribute("value").length();
+                        }
+                    });
+                }
 
+                By resultButtonLocator = By.xpath(String.format("//button[contains(text(),'%s')]", code_f));
+
+                // Wait until button exists in DOM (presence)
+                WebElement select = WaitUtils.waitForPresence(resultButtonLocator);
+
+                // Wait until button is visible
+                WaitUtils.waitForVisible(select);
+
+                // Wait until button is clickable
+                WaitUtils.waitForClickable(select);
+
+                WaitUtils.scrollIntoViewCenter(select);
+
+                select.click();
+
+             }
+
+
+    public void enterTo(String to, String code_t) {
+        //WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+
+        toInput.clear();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(500)); // Set explicit wait time
+        // Slow typing: Send each character with an explicit wait for each character typed
+        for (char c : to.toCharArray()) {
+            toInput.sendKeys(String.valueOf(c));  // Send one character at a time
+
+            // Wait for the input field value to update (waiting for it to change)
+            wait.until(new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver driver) {
+                    // Check if the value of the input field has changed (indicating a new character was typed)
+                    String currentText = toInput.getAttribute("value");
+                    return currentText.length() > 0 && currentText.length() == toInput.getAttribute("value").length();
+                }
+            });
+        }
+
+        By resultButtonLocator = By.xpath(String.format("//button[contains(text(),'%s')]", code_t));
 
         // Wait until button exists in DOM (presence)
         WebElement select = WaitUtils.waitForPresence(resultButtonLocator);
@@ -139,70 +187,37 @@ public class FlightHomePage extends BasePage {
         select.click();
 
     }
+    public void selectDepartureDate(String departureDate) {
+        WaitUtils.waitForClickable(departureDateele);
+        departureDateele.clear();
+        //departureDateele.sendKeys(departureDate);
 
-    public void enterTo(String to, String code_t ) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(500)); // Set explicit wait time
+        // Slow typing: Send each character with an explicit wait for each character typed
+        for (char c : departureDate.toCharArray()) {
+            departureDateele.sendKeys(String.valueOf(c));  // Send one character at a time
 
-            //WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
-            toInput.clear();
-            toInput.sendKeys(to);
-
-//            // wait until at least one result is visible
-//            wait.waitForVisible(airportResultsContainer);
-//            String dynamicXpath = String.format(".//button[normalize-space()='%s']", code_t);
-//            WebElement select = airportResultsContainer.findElement(By.xpath(dynamicXpath));
-//            wait.waitForClickable(select).click();
-             By resultButtonLocator = By.xpath("//button[contains(normalize-space(),'" + code_t + "')]");
-             WebElement select = WaitUtils.waitForPresence(resultButtonLocator);
-
-            // Step 3: Wait for the button to be visible
-            WaitUtils.waitForVisible(select);
-
-            // Step 4: Wait for the button to be clickable
-            WaitUtils.waitForClickable(select);
-
-            // Step 5: Scroll the button into view to avoid being hidden by any popup/banner
-            WaitUtils.scrollIntoViewCenter(select);
-
-            // Step 6: Click the button safely
-            select.click();
-
+            // Wait for the input field value to update (waiting for it to change)
+            wait.until(new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver driver) {
+                    // Check if the value of the input field has changed (indicating a new character was typed)
+                    String currentText = departureDateele.getAttribute("value");
+                    return currentText.length() > 0 && currentText.length() == departureDateele.getAttribute("value").length();
+                }
+            });
+        }
     }
 
-//    private void dismissCookieBannerIfPresent() {
-//        try {
-//            WebElement cookieBanner = driver.findElement(By.id("cookie_disclaimer"));
-//            if (cookieBanner.isDisplayed()) {
-//                cookieBanner.findElement(By.tagName("button")).click();
-//                // optional: wait until banner disappears
-//                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-//                wait.until(ExpectedConditions.invisibilityOf(cookieBanner));
-//            }
-//        } catch (NoSuchElementException ignored) {
-//            // banner not present, safe to continue
-//        }
-//    }
+    public void selectDates(String departureDate, String returnDate) {
+        // Select departure date
+        WaitUtils.waitForClickable(departureDateele);
+        departureDateele.clear();
+        departureDateele.sendKeys(departureDate);
 
-//    public void enterFrom(String from) {
-//        wait.waitForVisible(By.xpath("//input[@name='from']"));
-//        fromInput.sendKeys(from);
-//
-//        By suggestion = By.xpath("//div[contains(@data-airport,'Airport')]");
-//        wait.waitForVisible(suggestion);
-//        fromInput.sendKeys(Keys.ENTER);
-//    }
-//
-//
-//    public void enterTo(String to, String code_t) {
-//        wait.waitForVisible(By.xpath("//input[@name='to']")).clear();
-//        toInput.sendKeys(to);
-//        toInput.sendKeys(Keys.ENTER);
-//
-//        By suggestion = By.xpath("//div[contains(@class,'result-option')]");
-//        wait.waitForVisible(suggestion);
-//    }
-
-    public void selectDepartureDate(String date) {
-       // wait.waitForClickable(departureDateBtn).click();
+        // Select return date (for multi-way)
+        WaitUtils.waitForClickable(returnDateele);
+        returnDateele.clear();
+        returnDateele.sendKeys(returnDate);
 
     }
 
