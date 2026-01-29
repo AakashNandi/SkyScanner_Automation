@@ -3,13 +3,21 @@ package windows;
 import base.BasePage;
 import hooks.Hooks;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.WaitUtils;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.NoSuchElementException;
+
+import static java.lang.Thread.sleep;
+import static org.openqa.selenium.By.xpath;
 
 public class FlightHomePage extends BasePage {
 
@@ -45,8 +53,10 @@ public class FlightHomePage extends BasePage {
     @FindBy(xpath = "//input[@name='from']")
     WebElement fromInput;
 
-    @FindBy(xpath = "//div[@id='onereturn']")
+  //  @FindBy(xpath = "//div[@id='onereturn']")
+    @FindBy(xpath = "//div[@id='onereturn']/div[1]/div/div")
     WebElement airportResultsContainer;
+
 
     // To input
     @FindBy(xpath = "//input[@name='to']]")
@@ -102,32 +112,75 @@ public class FlightHomePage extends BasePage {
             }
         }
 
-        //System.out.println("Executed");
     }
 
     public void enterFrom(String from, String code_f ) {
+
+        WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+
         fromInput.clear();
         fromInput.sendKeys(from);
 
-        // wait until at least one result is visible
-        wait.waitForVisible(airportResultsContainer);
-        String dynamicXpath = String.format(".//button[normalize-space()='%s']",code_f);
-        WebElement select = airportResultsContainer.findElement(By.xpath(dynamicXpath));
-        wait.waitForClickable(select).click();
+       // By resultButtonLocator = By.xpath("//button[contains(normalize-space(),'" + code_f + "')]");
+        By resultButtonLocator = By.xpath(String.format("//button[contains(text(),'%s')]", code_f));
+
+
+        // Wait until button exists in DOM (presence)
+        WebElement select = WaitUtils.waitForPresence(resultButtonLocator);
+
+        // Wait until button is visible
+        WaitUtils.waitForVisible(select);
+
+        // Wait until button is clickable
+        WaitUtils.waitForClickable(select);
+
+        WaitUtils.scrollIntoViewCenter(select);
+
+        select.click();
 
     }
 
     public void enterTo(String to, String code_t ) {
-        toInput.clear();
-        toInput.sendKeys(to);
 
-        // wait until at least one result is visible
-        wait.waitForVisible(airportResultsContainer);
-        String dynamicXpath = String.format(".//button[normalize-space()='%s']",code_t);
-        WebElement select = airportResultsContainer.findElement(By.xpath(dynamicXpath));
-        wait.waitForClickable(select).click();
+            //WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+            toInput.clear();
+            toInput.sendKeys(to);
+
+//            // wait until at least one result is visible
+//            wait.waitForVisible(airportResultsContainer);
+//            String dynamicXpath = String.format(".//button[normalize-space()='%s']", code_t);
+//            WebElement select = airportResultsContainer.findElement(By.xpath(dynamicXpath));
+//            wait.waitForClickable(select).click();
+             By resultButtonLocator = By.xpath("//button[contains(normalize-space(),'" + code_t + "')]");
+             WebElement select = WaitUtils.waitForPresence(resultButtonLocator);
+
+            // Step 3: Wait for the button to be visible
+            WaitUtils.waitForVisible(select);
+
+            // Step 4: Wait for the button to be clickable
+            WaitUtils.waitForClickable(select);
+
+            // Step 5: Scroll the button into view to avoid being hidden by any popup/banner
+            WaitUtils.scrollIntoViewCenter(select);
+
+            // Step 6: Click the button safely
+            select.click();
 
     }
+
+//    private void dismissCookieBannerIfPresent() {
+//        try {
+//            WebElement cookieBanner = driver.findElement(By.id("cookie_disclaimer"));
+//            if (cookieBanner.isDisplayed()) {
+//                cookieBanner.findElement(By.tagName("button")).click();
+//                // optional: wait until banner disappears
+//                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//                wait.until(ExpectedConditions.invisibilityOf(cookieBanner));
+//            }
+//        } catch (NoSuchElementException ignored) {
+//            // banner not present, safe to continue
+//        }
+//    }
 
 //    public void enterFrom(String from) {
 //        wait.waitForVisible(By.xpath("//input[@name='from']"));
@@ -149,7 +202,7 @@ public class FlightHomePage extends BasePage {
 //    }
 
     public void selectDepartureDate(String date) {
-        wait.waitForClickable(departureDateBtn).click();
+       // wait.waitForClickable(departureDateBtn).click();
 
     }
 

@@ -32,7 +32,9 @@ public class FlightSearchSteps {
     public void loadTestData(String tcId) {
         t_type = JsonUtil.getData(tcId,"type");
         from = JsonUtil.getData(tcId, "from");
+        code_f = JsonUtil.getData(tcId, "code_f");
         to = JsonUtil.getData(tcId, "to");
+        code_t = JsonUtil.getData(tcId, "code_t");
         departureDate = JsonUtil.getData(tcId, "departureDate");
         adults = JsonUtil.getData(tcId, "adults");
         cabinClass = JsonUtil.getData(tcId, "cabinClass");
