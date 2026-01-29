@@ -15,7 +15,9 @@ public class FlightSearchSteps {
 
     String t_type;
     String from;
+    String code_f;
     String to;
+    String code_t;
     String departureDate;
     String adults;
     String cabinClass;
@@ -44,8 +46,8 @@ public class FlightSearchSteps {
 
     @And("user enters From and To locations")
     public void enterRoute() {
-        homePage.enterFrom(from);
-        homePage.enterTo(to);
+        homePage.enterFrom(from,code_f);
+        homePage.enterTo(to,code_t);
     }
 
     @And("user selects departure date")

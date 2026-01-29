@@ -2,7 +2,9 @@
   "TC_01": {
     "type": "One Way",
     "from": "Kolkata",
+    "code_f": "CCU",
     "to": "Delhi",
+    "code_t": "NZM",
     "departureDate": "2026-02-10",
     "adults": "2",
     "cabinClass": "Economy"
@@ -11,17 +13,21 @@
   "TC_02": {
     "type": "Return",
     "from": "Mumbai",
+    "code_f": "BOM",
     "to": "Dubai",
+    "code_t": "DWC",
     "departureDate": "2026-03-05",
     "returnDate": "2026-03-08",
     "adults": "1",
-    "cabinClass": "Business"
+    "cabinClass": "First"
   },
 
   "TC_03": {
     "type": "One Way",
     "from": "Chennai",
+    "code_f": "MAA",
     "to": "Singapore",
+    "code_t": "XSP",
     "departureDate": "2026-04-15",
     "adults": "3",
     "cabinClass": "Economy"
