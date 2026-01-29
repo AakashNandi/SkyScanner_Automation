@@ -5,8 +5,11 @@
     "code_f": "BOM",
     "to": "Delhi",
     "code_t": "DEL",
-    "departureDate": "2026-02-10",
+    "departureDate": "02-10-2026",
+    "returnDate": "NA",
     "adults": "2",
+    "childs": "1",
+    "infants": "1",
     "cabinClass": "Economy"
   },
 
@@ -16,9 +19,11 @@
     "code_f": "CCU",
     "to": "Mumbai",
     "code_t": "BOM",
-    "departureDate": "2026-03-05",
-    "returnDate": "2026-03-08",
+    "departureDate": "03-05-2026",
+    "returnDate": "07-05-2026",
     "adults": "1",
+    "childs": "1",
+    "infants": "1",
     "cabinClass": "First"
   },
 
@@ -28,8 +33,11 @@
     "code_f": "MAA",
     "to": "Delhi",
     "code_t": "DEL",
-    "departureDate": "2026-04-15",
+    "departureDate": "04-07-2026",
+    "returnDate": "NA",
     "adults": "3",
+    "childs": "1",
+    "infants": "1",
     "cabinClass": "Economy"
   }
 }

@@ -6,7 +6,7 @@ Feature: One-way Flight Search on Skyscanner
     When user selects trip-type and trip class
     And user enters From and To locations
     And user selects Dates
-    And user selects travellers and cabin class
+    And user selects travellers
     And user clicks search
     Then flight results should be displayed
 

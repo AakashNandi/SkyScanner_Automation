@@ -21,6 +21,8 @@ public class FlightSearchSteps {
     String departureDate;
     String returnDate;
     String adults;
+    String childs;
+    String infants;
     String cabinClass;
 
     @Given("user is on flights site page")
@@ -55,7 +57,7 @@ public class FlightSearchSteps {
         homePage.enterTo(to,code_t);
     }
 
-    @And("user selects dates")
+    @And("user selects Dates")
     public void selectDate() {
         if ("One way".equalsIgnoreCase(t_type)) {
             // Select only the departure date for one-way trip
@@ -66,9 +68,9 @@ public class FlightSearchSteps {
         }
     }
 
-    @And("user selects travellers and cabin class")
+    @And("user selects travellers")
     public void selectPassengers() {
-        System.out.println("Adults: " + adults + ", Cabin: " + cabinClass);
+            homePage.selectTravellers(adults, childs, infants);
     }
 
     @And("user clicks search")
