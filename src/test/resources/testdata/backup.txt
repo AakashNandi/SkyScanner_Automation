@@ -1,0 +1,189 @@
+
+//    public void selectTravellers(String adultCount, String childCount, String infantCount) {
+//
+//        int aC = Integer.parseInt(adultCount);
+//        int cC = Integer.parseInt(childCount);
+//        int iC = Integer.parseInt(infantCount);
+//
+//        // Step 1: Click on the travelers section to expand the dropdown
+//        WaitUtils.waitForClickable(travellersBtn);
+//        travellersBtn.click();
+//
+//        WaitUtils.waitForVisible(travellersdrop);
+//
+//        // Step 2: Adjust the adult count
+//        adjustCount(aC, adultSectionElement, adultCountTextLocator);  // New locator for adult count text
+//
+//        // Step 3: Adjust the child count
+//        adjustCount(cC, childSectionElement, childCountTextLocator);  // New locator for child count text
+//
+//        // Step 4: Adjust the infant count
+//        adjustCount(iC, infantSectionElement, infantCountTextLocator);  // New locator for infant count text
+//    }
+
+//    private void adjustCount(int desiredCount, WebElement sectionElement, WebElement countTextLocator) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//
+//        // Wait for the section element to be clickable
+//        wait.until(ExpectedConditions.elementToBeClickable(sectionElement));
+//
+//        // Set initial current count based on section type
+//        int currentCount = 0;  // Default value
+//
+//        // Set current count according to the section (no need for getText)
+//        if (sectionElement == adultSectionElement) {
+//            currentCount = 1;  // Initial value for adult section
+//        } else if (sectionElement == childSectionElement) {
+//            currentCount = 0;  // Initial value for child section
+//        } else if (sectionElement == infantSectionElement) {
+//            currentCount = 0;  // Initial value for infant section
+//        }
+//
+//        // Ensure we don't overshoot the desired count
+//        while (currentCount < desiredCount) {
+//            try {
+//                // Click the increment button
+//                WebElement incrementButton = sectionElement.findElement(By.xpath("//div[@class = 'qtyInc']"));
+//                incrementButton.click();
+//
+//                // Wait for the count text to update after the click
+//                wait.until(ExpectedConditions.textToBePresentInElementLocated(countTextLocator, String.valueOf(currentCount + 1)));
+//
+//                // Update currentCount to the new value (check the text again to avoid overshooting)
+//                String countText = driver.findElement(countTextLocator).getText();
+//                currentCount = Integer.parseInt(countText);
+//
+//                // If the count reaches the desired count, break the loop
+//                if (currentCount >= desiredCount) {
+//                    break;
+//                }
+//            } catch (StaleElementReferenceException e) {
+//                // If element becomes stale, re-locate and retry
+//                System.out.println("Stale element detected, re-locating...");
+//                sectionElement = wait.until(ExpectedConditions.elementToBeClickable(sectionElement));  // Re-locate section element
+//            }
+//        }
+//    }
+
+
+
+
+//    public void selectTravellers(String adults) {
+//       // wait.waitForClickable(travellersBtn).click();
+////
+////        int adultCount = Integer.parseInt(adults);
+////        By addAdultBtn = By.xpath("//button[@aria-label='Increase adults']");
+//
+////        for (int i = 1; i < adultCount; i++) {
+////            wait.waitForClickable(addAdultBtn).click();
+////        }
+//        System.out.println("Hey");
+//    }
+
+//public void selectTravellers(String adultCount, String childCount, String infantCount) {
+//
+//    int aC = Integer.parseInt(adultCount);
+//    int cC = Integer.parseInt(childCount);
+//    int iC= Integer.parseInt(infantCount);
+//    // Step 1: Click on the travelers section to expand the dropdown
+//    WaitUtils.waitForClickable(travellersBtn);
+//    travellersBtn.click();
+//
+//    WaitUtils.waitForVisible(travellersdrop);
+//    // Step 2: Adjust the adult count
+//    adjustCount(aC, adultSectionElement);  // You will need the WebElement for the adult section
+//
+//    // Step 3: Adjust the child count
+//    adjustCount(cC, childSectionElement);  // You will need the WebElement for the child section
+//
+//    // Step 4: Adjust the infant count
+//    adjustCount(iC, infantSectionElement);  // You will need the WebElement for the infant section
+//}
+//
+//    private void adjustCount(int desiredCount, WebElement sectionElement) {
+//        // Wait for the section element to be clickable (if not already clicked)
+//        WaitUtils.waitForClickable(sectionElement);
+//
+//        int currentCount = 0;  // Default value (adjust if you have a way to get the initial count)
+//
+//        // Get the current count displayed for the section
+//        if (sectionElement == adultSectionElement) {
+//            currentCount = 1;  // Set initial value for adult section
+//        } else if (sectionElement == childSectionElement) {
+//            currentCount = 0;  // Set initial value for child section
+//        } else if (sectionElement == infantSectionElement) {
+//            currentCount = 0;  // Set initial value for infant section
+//        }
+//
+//        // If current count is less than the desired count, click "+" to increase
+//        while (currentCount < desiredCount) {
+//            // Find the increment button and click it
+//            WebElement incrementButton = sectionElement.findElement(By.xpath("//div[@class = 'qtyInc']"));  // Adjust for actual button selector
+//            incrementButton.click();
+//            currentCount++; // Increment the count after clicking
+//        }
+//
+////        // If current count is more than desired count, click "-" to decrease (optional, if needed)
+////        while (currentCount > desiredCount) {
+///          WebElement decrementButton = sectionElement.findElement(By.xpath("//*[@class, 'decreaseButton')]"));  // Adjust for actual button selector
+////            decrementButton.click();
+////            currentCount--; // Decrement the count after clicking
+////        }
+//    }
+
+//public void selectTravellers(String adultCount, String childCount, String infantCount) {
+//
+//    int aC = Integer.parseInt(adultCount);
+//    int cC = Integer.parseInt(childCount);
+//    int iC = Integer.parseInt(infantCount);
+//
+//    // Step 1: Click on the travelers section to expand the dropdown
+//    WaitUtils.waitForClickable(travellersBtn);
+//    travellersBtn.click();
+//
+//    WaitUtils.waitForVisible(travellersdrop);
+//
+//    // Step 2: Adjust the adult count
+//    adjustCount(aC, adultSectionElement);
+//
+//    // Step 3: Adjust the child count
+//    adjustCount(cC, childSectionElement);
+//
+//    // Step 4: Adjust the infant count
+//    adjustCount(iC, infantSectionElement);
+//}
+//
+//    private void adjustCount(int desiredCount, WebElement sectionElement) {
+//       // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//
+//        // Wait for the section element to be clickable
+//        WaitUtils.waitForVisible(sectionElement);
+//       // wait.until(ExpectedConditions.elementToBeClickable(sectionElement));
+//
+//        int currentCount = 0;  // Default value (adjust if you have a way to get the initial count)
+//
+//        // Set initial current count based on section type
+//        if (sectionElement == adultSectionElement) {
+//            currentCount = 1;  // Initial value for adult section
+//        } else if (sectionElement == childSectionElement) {
+//            currentCount = 0;  // Initial value for child section
+//        } else if (sectionElement == infantSectionElement) {
+//            currentCount = 0;  // Initial value for infant section
+//        }
+//
+//        // Adjust the count by clicking "+" button until we reach the desired count
+//        while (currentCount < desiredCount) {
+//            try {
+//                // Re-locate the increment button each time (in case the element becomes stale)
+//                WebElement incrementButton = sectionElement.findElement(By.xpath("//div[@class = 'qtyInc']"));
+//                incrementButton.click();
+//                currentCount++;  // Increment the count after clicking
+//            } catch (StaleElementReferenceException e) {
+//                // If the element becomes stale, re-locate the section element and retry
+//                System.out.println("Stale element detected, re-locating...");
+//                sectionElement = WaitUtils.waitForClickable(sectionElement);  // Re-locate section element
+//            }
+//        }
+//    }
+
+

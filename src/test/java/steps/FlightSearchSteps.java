@@ -41,6 +41,8 @@ public class FlightSearchSteps {
         departureDate = JsonUtil.getData(tcId, "departureDate");
         returnDate = JsonUtil.getData(tcId, "returnDate");
         adults = JsonUtil.getData(tcId, "adults");
+        childs = JsonUtil.getData(tcId, "childs");
+        infants = JsonUtil.getData(tcId, "infants");
         cabinClass = JsonUtil.getData(tcId, "cabinClass");
     }
 

@@ -3,6 +3,7 @@ package windows;
 import base.BasePage;
 import hooks.Hooks;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -73,15 +74,23 @@ public class FlightHomePage extends BasePage {
     @FindBy(xpath = "//div[contains(@class,'dropdown-menu')]/div")
     WebElement travellersdrop;
 
-    @FindBy(xpath = "//div[contains(@class,'dropdown-menu')]/div[1]")
+    @FindBy(xpath = "//*[@id='fadults']")
+    WebElement adultCountTextLocator;
+
+    @FindBy(xpath = "(//div[input[@id='fadults']])[1]//ancestor::div[contains(@class, 'qtyBtn')]//div[@class='qtyInc']")
     WebElement adultSectionElement;
 
-    @FindBy(xpath = "//div[contains(@class,'dropdown-menu')]/div[2]")
+    @FindBy(xpath = "//*[@id='fchilds']")
+    WebElement childCountTextLocator;
+
+    @FindBy(xpath = "(//div[input[@id='fchilds']])[1]//ancestor::div[contains(@class, 'qtyBtn')]//div[@class='qtyInc']")
     WebElement childSectionElement;
 
-    @FindBy(xpath = "//div[contains(@class,'dropdown-menu')]/div[3]")
-    WebElement infantSectionElement;
+    @FindBy(xpath = "//*[@id='finfant']")
+    WebElement infantCountTextLocator;
 
+    @FindBy(xpath = "(//div[input[@id='finfant']])[1]//ancestor::div[contains(@class, 'qtyBtn')]//div[@class='qtyInc']")
+    WebElement infantSectionElement;
 
     // Add hotel checkbox
     @FindBy(xpath = "//input[@type='checkbox']")
@@ -210,7 +219,7 @@ public class FlightHomePage extends BasePage {
         departureDateele.clear();
 
         // Create an explicit wait for overall interaction (adjust wait time as needed)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Use a reasonable wait time (e.g., 5 seconds)
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50)); // Use a reasonable wait time (e.g., 5 seconds)
 
         // Slow typing: Send each character one by one
         for (char c : departureDate.toCharArray()) {
@@ -250,7 +259,7 @@ public class FlightHomePage extends BasePage {
         dateElement.clear();
 
         // Create an explicit wait for overall interaction (adjust wait time as needed)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Reasonable wait time
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50)); // Reasonable wait time
 
         // Slow typing: Send each character one by one
         for (char c : date.toCharArray()) {
@@ -270,61 +279,329 @@ public class FlightHomePage extends BasePage {
         }
     }
 
-
-
-//    public void selectTravellers(String adults) {
-//       // wait.waitForClickable(travellersBtn).click();
-////
-////        int adultCount = Integer.parseInt(adults);
-////        By addAdultBtn = By.xpath("//button[@aria-label='Increase adults']");
+//    public void selectTravellers(String adultCount, String childCount, String infantCount) {
 //
-////        for (int i = 1; i < adultCount; i++) {
-////            wait.waitForClickable(addAdultBtn).click();
-////        }
-//        System.out.println("Hey");
+//        int aC = Integer.parseInt(adultCount);
+//        int cC = Integer.parseInt(childCount);
+//        int iC = Integer.parseInt(infantCount);
+//
+//        // Step 1: Click on the travelers section to expand the dropdown
+//        WaitUtils.waitForClickable(travellersBtn);
+//        travellersBtn.click();
+//
+//        WaitUtils.waitForVisible(travellersdrop);
+//
+//        // Step 2: Adjust the adult count
+//        adjustCount(aC, adultSectionElement, adultCountTextLocator);  // Use WebElement for adult count text
+//
+//        // Step 3: Adjust the child count
+//        adjustCount(cC, childSectionElement, childCountTextLocator);  // Use WebElement for child count text
+//
+//        // Step 4: Adjust the infant count
+//        adjustCount(iC, infantSectionElement, infantCountTextLocator);  // Use WebElement for infant count text
 //    }
-
+//    private void adjustCount(int desiredCount, WebElement sectionElement, WebElement countTextElement) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//
+//        // Wait for the section element to be clickable
+//        wait.until(ExpectedConditions.elementToBeClickable(sectionElement));
+//
+//        int currentCount = getCurrentCount(countTextElement);  // Get the initial displayed count
+//        System.out.println("Initial Count: " + currentCount);  // Debugging
+//
+//        // If current count is less than the desired count, click "+" to increase
+//        while (currentCount < desiredCount) {
+//            try {
+//                // Re-locate the increment button each time (in case the element becomes stale)
+//                WebElement incrementButton = sectionElement.findElement(By.xpath("//div[@class = 'qtyInc']"));
+//
+//                // Ensure the increment button is clickable
+//                wait.until(ExpectedConditions.elementToBeClickable(incrementButton));
+//
+//                // Click to increment count
+//                incrementButton.click();
+//
+//                // Wait for the count text to be updated
+//                int finalCurrentCount = currentCount;
+//                wait.until(new ExpectedCondition<Boolean>() {
+//                    public Boolean apply(WebDriver driver) {
+//                        int updatedCount = getCurrentCount(countTextElement);
+//                        return updatedCount > finalCurrentCount;  // Continue until the count has increased
+//                    }
+//                });
+//
+//                // After waiting for count to update, retrieve the updated count
+//                currentCount = getCurrentCount(countTextElement);
+//                System.out.println("Updated Count: " + currentCount);  // Debugging
+//
+//                // Ensure the updated count matches the desired count after the click
+//                if (currentCount >= desiredCount) {
+//                    break;
+//                }
+//
+//            } catch (StaleElementReferenceException e) {
+//                // If the element becomes stale, re-locate and retry
+//                System.out.println("Stale element detected, re-locating...");
+//                sectionElement = wait.until(ExpectedConditions.elementToBeClickable(sectionElement));  // Re-locate section element
+//            } catch (Exception e) {
+//                // Add generic exception handling to prevent infinite loop
+//                System.out.println("An error occurred: " + e.getMessage());
+//                break;  // Exit the loop on any other error
+//            }
+//        }
+//
+//        System.out.println("Final Count: " + currentCount);  // Debugging
+//    }
+//
+//
+//    // Helper method to extract current count from the displayed text
+//    private int getCurrentCount(WebElement countTextElement) {
+//        String countText = countTextElement.getText();
+//        try {
+//            return Integer.parseInt(countText.trim());  // Extract the count from text and parse it
+//        } catch (NumberFormatException e) {
+//            // Return 0 if the text isn't a valid number (fallback)
+//            return 0;
+//        }
+//    }
 public void selectTravellers(String adultCount, String childCount, String infantCount) {
 
     int aC = Integer.parseInt(adultCount);
     int cC = Integer.parseInt(childCount);
-    int iC= Integer.parseInt(infantCount);
+    int iC = Integer.parseInt(infantCount);
+
     // Step 1: Click on the travelers section to expand the dropdown
     WaitUtils.waitForClickable(travellersBtn);
     travellersBtn.click();
 
     WaitUtils.waitForVisible(travellersdrop);
+
     // Step 2: Adjust the adult count
-    adjustCount(aC, adultSectionElement);  // You will need the WebElement for the adult section
+    adjustCount(aC, adultSectionElement);  // Use WebElement for adult count text
 
     // Step 3: Adjust the child count
-    adjustCount(cC, childSectionElement);  // You will need the WebElement for the child section
+    adjustCount(cC, childSectionElement);  // Use WebElement for child count text
 
     // Step 4: Adjust the infant count
-    adjustCount(iC, infantSectionElement);  // You will need the WebElement for the infant section
+    adjustCount(iC, infantSectionElement);  // Use WebElement for infant count text
 }
 
-    private void adjustCount(int desiredCount, WebElement sectionElement) {
-        // Wait for the section element to be clickable (if not already clicked)
-        WaitUtils.waitForClickable(sectionElement);
-
-        // Get the current count displayed for the section
-        int currentCount = Integer.parseInt(sectionElement.getText());  // Adjust if the count is displayed in another way
-
-        // If current count is less than the desired count, click "+" to increase
-        while (currentCount < desiredCount) {
-            WebElement incrementButton = sectionElement.findElement(By.xpath("//div[@class = 'qtyInc']"));  // Adjust for actual button selector
-            incrementButton.click();
-            currentCount++; // Increment the count after clicking
-        }
-
-//        // If current count is more than desired count, click "-" to decrease (optional, if needed)
-//        while (currentCount > desiredCount) {
-//            WebElement decrementButton = sectionElement.findElement(By.xpath("//*[contains(@class, 'decreaseButton')]"));  // Adjust for actual button selector
-//            decrementButton.click();
-//            currentCount--; // Decrement the count after clicking
+//    private void adjustCount(int desiredCount, WebElement sectionElement, WebElement countTextElement) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+////
+////        // Wait for the section element to be clickable
+////        wait.until(ExpectedConditions.elementToBeClickable(sectionElement));
+//        WaitUtils.waitForVisible(sectionElement);
+//
+//        int currentCount = getCurrentCount(countTextElement);  // Get the initial displayed count
+//        System.out.println("Initial Count: " + currentCount);  // Debugging
+//
+//        // If current count is less than the desired count, click "+" to increase
+//        while (currentCount < desiredCount) {
+//            try {
+//                // Re-locate the increment button each time (in case the element becomes stale)
+//
+//
+//                // Ensure the increment button is clickable
+//                //wait.until(ExpectedConditions.elementToBeClickable(sectionElement));
+//                WaitUtils.waitForClickable(sectionElement);
+//
+//                // Click to increment count
+//                sectionElement.click();
+//
+//                // Wait for the count text to be updated
+//                int finalCurrentCount = currentCount;
+//                wait.until(new ExpectedCondition<Boolean>() {
+//                    public Boolean apply(WebDriver driver) {
+//                        int updatedCount = getCurrentCount(countTextElement);
+//                        return updatedCount > finalCurrentCount;  // Continue until the count has increased
+//                    }
+//                });
+//
+//                // After waiting for count to update, retrieve the updated count
+//                currentCount = getCurrentCount(countTextElement);
+//                System.out.println("Updated Count: " + currentCount);  // Debugging
+//
+//                // Ensure the updated count matches the desired count after the click
+//                if (currentCount >= desiredCount) {
+//                    break;
+//                }
+//
+//            } catch (StaleElementReferenceException e) {
+//                // If the element becomes stale, re-locate and retry
+//                System.out.println("Stale element detected, re-locating...");
+//                sectionElement = wait.until(ExpectedConditions.elementToBeClickable(sectionElement));  // Re-locate section element
+//            } catch (Exception e) {
+//                // Add generic exception handling to prevent infinite loop
+//                System.out.println("An error occurred: " + e.getMessage());
+//                break;  // Exit the loop on any other error
+//            }
 //        }
+//
+//        System.out.println("Final Count: " + currentCount);  // Debugging
+//    }
+
+private void adjustCount(int desiredCount, WebElement sectionElement) {
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+    // Get the current count (assuming it's updated in the DOM after each click)
+    int currentCount = getCurrentCount(sectionElement);
+    System.out.println("Initial Count: " + currentCount);  // Debugging
+
+    // If the current count is already equal to the desired count, no need to click
+    if (currentCount == desiredCount) {
+        System.out.println("Current count is already " + currentCount + ". No clicks needed.");
+        return;
     }
+
+    // We need to click the section element to increment the count
+    while (currentCount < desiredCount) {
+        try {
+            // Wait for the section element to be clickable (ensures that we're not missing clicks)
+            WaitUtils.waitForClickable(sectionElement);
+
+            // Click to increment count
+            sectionElement.click();
+
+            // Wait for the count to update (ensures the count is updated in the DOM after click)
+            int finalCurrentCount = currentCount;
+            WebElement finalSectionElement = sectionElement;
+            wait.until(new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver driver) {
+                    int updatedCount = getCurrentCount(finalSectionElement);
+                    return updatedCount > finalCurrentCount;  // Ensure the count has increased
+                }
+            });
+
+            // After the count has been updated, retrieve the new count
+            currentCount = getCurrentCount(sectionElement);
+            System.out.println("Updated Count: " + currentCount);  // Debugging
+
+            // If the count is now equal to or greater than the desired count, exit the loop
+            if (currentCount >= desiredCount) {
+                break;
+            }
+
+        } catch (StaleElementReferenceException e) {
+            // If the element becomes stale, re-locate and retry
+            System.out.println("Stale element detected, re-locating...");
+            sectionElement = wait.until(ExpectedConditions.elementToBeClickable(sectionElement));  // Re-locate section element
+        } catch (Exception e) {
+            // Add generic exception handling to prevent infinite loop
+            System.out.println("An error occurred: " + e.getMessage());
+            break;  // Exit the loop on any other error
+        }
+    }
+
+    System.out.println("Final Count: " + currentCount);  // Debugging
+}
+
+    // Helper method to extract current count from the displayed text
+    private int getCurrentCount(WebElement sectionElement) {
+        try {
+            // Fetch the count from the element's text (assuming it's updated after clicks)
+            String countText = sectionElement.getText();
+            System.out.println("Text from countTextElement: " + countText);  // Debugging output
+            return Integer.parseInt(countText.trim());  // Convert to integer
+        } catch (NumberFormatException e) {
+            // In case the value is not a valid number, return 0 as fallback
+            System.out.println("Failed to parse count from text: " + sectionElement.getText());
+            return 0;
+        }
+    }
+
+
+//private void adjustCount(int desiredCount, WebElement sectionElement, WebElement countTextElement) {
+//    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//
+//    // Wait for the section element to be visible
+//    WaitUtils.waitForVisible(sectionElement);
+//
+//    int currentCount = getCurrentCount(countTextElement);  // Get the initial displayed count
+//    System.out.println("Initial Count: " + currentCount);  // Debugging
+//
+//    // If current count is already equal to the desired count, no need to click
+//    if (currentCount == desiredCount) {
+//        System.out.println("Current count is already " + currentCount + ", no need to increment.");
+//        return;  // Exit early if no changes are needed
+//    }
+//
+//    // If current count is less than the desired count, click to increment
+//    while (currentCount < desiredCount) {
+//        try {
+//            // Wait for the section element to be clickable
+//            WaitUtils.waitForClickable(sectionElement);
+//
+//            // Click the section element (this is the element that increments the count)
+//            sectionElement.click();
+//
+//            // Wait for the count text to be updated
+//            int finalCurrentCount = currentCount;
+//            wait.until(new ExpectedCondition<Boolean>() {
+//                public Boolean apply(WebDriver driver) {
+//                    int updatedCount = getCurrentCount(countTextElement);
+//                    return updatedCount > finalCurrentCount;  // Wait until the count increases
+//                }
+//            });
+//
+//            // After waiting for the count to be updated, retrieve the updated count
+//            currentCount = getCurrentCount(countTextElement);
+//            System.out.println("Updated Count: " + currentCount);  // Debugging
+//
+//            // If the count is now equal to or greater than the desired count, exit the loop
+//            if (currentCount >= desiredCount) {
+//                break;
+//            }
+//
+//        } catch (StaleElementReferenceException e) {
+//            // If the element becomes stale, re-locate and retry
+//            System.out.println("Stale element detected, re-locating...");
+//            sectionElement = wait.until(ExpectedConditions.elementToBeClickable(sectionElement));  // Re-locate section element
+//        } catch (Exception e) {
+//            // Add generic exception handling to prevent infinite loop
+//            System.out.println("An error occurred: " + e.getMessage());
+//            break;  // Exit the loop on any other error
+//        }
+//    }
+//
+//    System.out.println("Final Count: " + currentCount);  // Debugging
+//}
+
+
+    // Helper method to extract current count from the displayed text
+//    private int getCurrentCount(WebElement countTextElement) {
+//        String countText = countTextElement.getText();
+//        try {
+//            return Integer.parseInt(countText.trim());  // Extract the count from text and parse it
+//        } catch (NumberFormatException e) {
+//            // Return 0 if the text isn't a valid number (fallback)
+//            return 0;
+//        }
+//    }
+
+//    private int getCurrentCount(WebElement countTextElement) {
+//        try {
+//            // Get the style attribute of the element
+//            String style = countTextElement.getAttribute("style");
+//            System.out.println("Style attribute: " + style);  // Debugging output
+//
+//            // Extract the number from the style attribute using a regex or string manipulation
+//            if (style != null && style.contains("count:")) {
+//                // Extract the count value using regex
+//                String countString = style.split("count:")[1].trim().replace(";", "");
+//                return Integer.parseInt(countString);
+//            }
+//        } catch (Exception e) {
+//            // Catch any exceptions and log for debugging
+//            System.out.println("Error extracting count from style: " + e.getMessage());
+//        }
+//
+//        // If no valid count is found, return 0
+//        return 0;
+//    }
+
+
+
 
 
     public void selectCabinClass(String cabinClass) {
@@ -337,9 +614,9 @@ public void selectTravellers(String adultCount, String childCount, String infant
     }
 
     public void untickAddHotel() {
-        if (addHotelCheckbox.isSelected()) {
-            addHotelCheckbox.click();
-        }
+//        if (addHotelCheckbox.isSelected()) {
+//            addHotelCheckbox.click();
+//        }
     }
 
     public void clickSearch() {
