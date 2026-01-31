@@ -89,12 +89,8 @@ public class FlightHomePage extends BasePage {
     @FindBy(xpath = "(//div[input[@id='finfant']])[1]//ancestor::div[contains(@class, 'qtyBtn')]//div[@class='qtyInc']")
     WebElement infantSectionElement;
 
-    // Add hotel checkbox
-    @FindBy(xpath = "//input[@type='checkbox']")
-    WebElement addHotelCheckbox;
-
     // Search button
-    @FindBy(xpath = "//button[contains(.,'Search')]")
+    @FindBy(xpath = "//button[@id='flights-search']")
     WebElement searchBtn;
 
     // ========================= VERIFICATION ========================= //
@@ -414,10 +410,15 @@ public void selectTravellers(String adultCount, String childCount, String infant
             jsExecutor.executeScript("arguments[0].click();", sectionElement);
             //WaitUtils.waitForClickable(sectionElement);
 
-            jsExecutor.executeScript("setTimeout(function(){}, 350);");
+            jsExecutor.executeScript("setTimeout(function(){}, 500);");
             // Explicit wait for a minimal delay (500ms)
-            //WaitUtils.waitForClickable(sectionElement); // Ensure the state of the element has changed before next click
+            WaitUtils.waitForClickable(sectionElement); // Ensure the state of the element has changed before next click
         }
+    }
+
+    public void clickSearch() {
+        WaitUtils.waitForClickable(searchBtn);
+        searchBtn.click();
     }
 
 
@@ -636,27 +637,4 @@ public void selectTravellers(String adultCount, String childCount, String infant
 //    }
 
 
-
-
-
-    public void selectCabinClass(String cabinClass) {
-//        By cabinDropdown = By.xpath("//select");
-//        wait.waitForClickable(cabinDropdown).click();
-//
-//        By option = By.xpath("//option[contains(text(),'" + cabinClass + "')]");
-//        wait.waitForClickable(option).click();
-        System.out.println("Hey");
-    }
-
-    public void untickAddHotel() {
-//        if (addHotelCheckbox.isSelected()) {
-//            addHotelCheckbox.click();
-//        }
-    }
-
-    public void clickSearch() {
-       // wait.waitForClickable(By.xpath("//button[contains(.,'Search')]")).click();
-        System.out.println("Hey");
-
-    }
 }
