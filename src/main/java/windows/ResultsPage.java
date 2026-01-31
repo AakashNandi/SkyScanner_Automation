@@ -2,50 +2,57 @@ package windows;
 
 import base.BasePage;
 import base.DriverFactory;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import utilities.WaitUtils;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ResultsPage extends BasePage {
 
-        private WaitUtils wait;
+    private WebDriverWait wait;
 
-        public ResultsPage() {
-            super(DriverFactory.getDriver());
-            wait = new WaitUtils(DriverFactory.getDriver());
+    public ResultsPage() {
+        super(DriverFactory.getDriver());
+        wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(20));
+    }
+
+    // ================= LOCATORS =================
+
+    // Combined text: "del cgy 03-02-2026"
+    @FindBy(xpath = "//span[@class='title_fetched-time']//strong")
+    private WebElement routeText;
+
+    // ================= PAGE METHODS =================
+
+    private String[] getRouteParts() {
+        String text = wait.until(ExpectedConditions.visibilityOf(routeText))
+                .getText()
+                .trim();                 // "del cgy 03-02-2026"
+
+        return text.split("\\s+");                 // ["del", "cgy", "03-02-2026"]
+    }
+
+    public String getFromAirportCode() {
+        return getRouteParts()[0].toUpperCase();   // DEL
+    }
+
+    public String getToAirportCode() {
+        return getRouteParts()[1].toUpperCase();   // CGY
+    }
+
+    public String getJourneyDate() {
+        return getRouteParts().length > 2 ? getRouteParts()[2] : "";
+    }
+
+    // ================= SANITY CHECK =================
+
+    public boolean isResultsPageLoaded() {
+        try {
+            return routeText.isDisplayed();
+        } catch (Exception e) {
+            return false;
         }
-
-        // ================= LOCATORS =================
-
-        // Source airport code (example: DEL)
-        @FindBy(xpath = "//span[contains(@class,'from') or contains(text(),'DEL')]")
-        WebElement fromAirportCode;
-
-        // Destination airport code (example: BOM)
-        @FindBy(xpath = "//span[contains(@class,'to') or contains(text(),'BOM')]")
-        WebElement toAirportCode;
-
-        // ================= PAGE METHODS =================
-
-        public String getFromAirportCode() {
-            return wait.waitForVisible(fromAirportCode)
-                    .getText()
-                    .trim();
-        }
-
-        public String getToAirportCode() {
-            return wait.waitForVisible(toAirportCode)
-                    .getText()
-                    .trim();
-        }
-
-        // Optional: sanity check for dummy site
-        public boolean isResultsPageLoaded() {
-            try {
-                return fromAirportCode.isDisplayed() || toAirportCode.isDisplayed();
-            } catch (Exception e) {
-                return false;
-            }
-        }
+    }
 }
