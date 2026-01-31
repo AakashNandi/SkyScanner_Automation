@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,6 +22,10 @@ public class WaitUtils {
 
         public static WebElement waitForVisible(WebElement locator) {
             return wait.until(ExpectedConditions.visibilityOf(locator));
+        }
+
+        public static Boolean waitForInVisible(WebElement locator) {
+        return wait.until(ExpectedConditions.invisibilityOf(locator));
         }
 
         public static WebElement waitForClickable(WebElement locator) {

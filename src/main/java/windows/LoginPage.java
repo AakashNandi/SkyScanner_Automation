@@ -33,6 +33,8 @@ public class LoginPage extends BasePage {
         @FindBy(id = "cookie_disclaimer")
         WebElement popup;
 
+        @FindBy(xpath = "//div[@class='vt-card error']")
+        WebElement error;
         // ================= LOW-LEVEL ACTIONS =================
 
 
@@ -61,12 +63,15 @@ public class LoginPage extends BasePage {
          */
         public void login(String username, String password) {
 
-            WaitUtils.waitForVisible(popup);
+
             WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+           // WaitUtils.waitForInVisible(popup);
 
             enterUsername(username);
             enterPassword(password);
             clickLogin();
+
+            WaitUtils.waitForVisible(error);
 
 
             System.out.println("Credentials entered and login clicked");
