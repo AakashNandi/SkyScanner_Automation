@@ -97,6 +97,7 @@ public class FlightHomePage extends BasePage {
 
     public void verifyHomeLoaded() {
         //wait.waitForVisible(By.xpath("//button[@role='tab']"));
+        //WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
         wait.waitForVisible(home);
         System.out.println("✅ Flight Home Page Loaded Successfully");
     }
@@ -130,7 +131,6 @@ public class FlightHomePage extends BasePage {
     }
 
     public void enterFrom(String from, String code_f) {
-               // WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
 
                 fromInput.clear();
 

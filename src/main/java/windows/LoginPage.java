@@ -65,13 +65,15 @@ public class LoginPage extends BasePage {
 
 
             WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
-           // WaitUtils.waitForInVisible(popup);
+            //WaitUtils.waitForInVisible(popup);
 
             enterUsername(username);
             enterPassword(password);
             clickLogin();
 
             WaitUtils.waitForVisible(error);
+            WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+            WaitUtils.waitForInVisible(popup);
 
 
             System.out.println("Credentials entered and login clicked");
