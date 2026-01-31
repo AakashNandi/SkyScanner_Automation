@@ -46,7 +46,7 @@ public class WaitUtils {
                 wait.until(ExpectedConditions.invisibilityOf(popup));
             }
         } catch (NoSuchElementException e) {
-            // Popup not present, safe to continue
+            //System.out.println("Popup not present, safe to continue");
         }
        }
 
