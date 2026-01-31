@@ -63,13 +63,10 @@ public class LoginPage extends BasePage {
          */
         public void login(String username, String password) {
 
-
             enterUsername(username);
-            enterPassword(password);
-
             WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
             WaitUtils.waitForInVisible(popup);
-
+            enterPassword(password);
             clickLogin();
 
             WaitUtils.waitForVisible(error);

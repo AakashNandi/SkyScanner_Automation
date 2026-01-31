@@ -93,13 +93,18 @@ public class FlightHomePage extends BasePage {
     @FindBy(xpath = "//button[@id='flights-search']")
     WebElement searchBtn;
 
+//    @FindBy(id = "cookie_disclaimer")
+//    WebElement popup;
+
     // ========================= VERIFICATION ========================= //
 
     public void verifyHomeLoaded() {
         //wait.waitForVisible(By.xpath("//button[@role='tab']"));
         //WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+
+       // WaitUtils.waitForInVisible(popup);
         wait.waitForVisible(home);
-        System.out.println("✅ Flight Home Page Loaded Successfully");
+        System.out.println("Flight Home Page Loaded Successfully");
     }
 
     // ========================= ACTION METHODS ========================= //
