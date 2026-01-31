@@ -130,7 +130,7 @@ public class FlightHomePage extends BasePage {
     }
 
     public void enterFrom(String from, String code_f) {
-                WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+               // WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
 
                 fromInput.clear();
 
