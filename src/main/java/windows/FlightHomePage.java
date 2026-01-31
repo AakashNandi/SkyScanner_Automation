@@ -370,14 +370,14 @@ public void selectTravellers(String adultCount, String childCount, String infant
    // WaitUtils.waitForVisible(travellersdrop);
 
     // Step 2: Adjust the adult count
-    //WaitUtils.waitForClickable(adultSectionElement);
+    WaitUtils.waitForClickable(adultSectionElement);
     adjustCount(aC, adultSectionElement);// Use WebElement for adult count text
 
     WaitUtils.waitForClickable(childSectionElement);
     // Step 3: Adjust the child count
     adjustCount(cC, childSectionElement);  // Use WebElement for child count text
 
-    //WaitUtils.waitForClickable(infantSectionElement);
+    WaitUtils.waitForClickable(infantSectionElement);
     // Step 4: Adjust the infant count
     adjustCount(iC, infantSectionElement);  // Use WebElement for infant count text
 }

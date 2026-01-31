@@ -1,6 +1,6 @@
-Feature: One-way Flight Search on Skyscanner
+Feature: Flight Search
 
-  Scenario Outline: Search one-way flight using dynamic test data
+  Scenario Outline: Search flight using dynamic test data
     Given user is on flights site page
     And user loads flight test data "<TC_ID>"
     When user selects trip-type and trip class
