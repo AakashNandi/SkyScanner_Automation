@@ -8,7 +8,7 @@ import windows.ResultsPage;
 
 public class ResultSteps {
 
-        @Then("Compare flight results using test data {String}")
+        @Then("Compare flight results using test data {string}")
         public void flight_results(String tcId) {
 
             ResultsPage resultsPage = new ResultsPage();

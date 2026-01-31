@@ -54,11 +54,12 @@ public class LoginPage extends BasePage {
          */
         public void login(String username, String password) {
 
+            WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
             enterUsername(username);
             enterPassword(password);
             clickLogin();
 
-            System.out.println("✅ Credentials entered and login clicked");
+            System.out.println("Credentials entered and login clicked");
 
             // site handling: force navigation
             DriverFactory.getDriver()
