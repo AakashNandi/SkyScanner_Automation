@@ -1,5 +1,7 @@
 {
   "TC_01": {
+    "username": "admin",
+    "password": "Admin@123",
     "type": "One Way",
     "from": "Mumbai",
     "code_f": "BOM",
@@ -14,6 +16,8 @@
   },
 
   "TC_02": {
+    "username": "admin01",
+    "password": "Admin@1423",
     "type": "Return",
     "from": "Kolkata",
     "code_f": "CCU",
@@ -28,6 +32,8 @@
   },
 
   "TC_03": {
+    "username": "admin02",
+    "password": "Admin@173",
     "type": "One Way",
     "from": "Chennai",
     "code_f": "MAA",

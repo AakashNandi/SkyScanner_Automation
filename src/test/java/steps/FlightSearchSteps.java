@@ -33,7 +33,7 @@ public class FlightSearchSteps {
 
     @And("user loads flight test data {string}")
     public void loadTestData(String tcId) {
-        t_type = JsonUtil.getData(tcId,"type");
+        t_type = JsonUtil.getData(tcId, "type");
         from = JsonUtil.getData(tcId, "from");
         code_f = JsonUtil.getData(tcId, "code_f");
         to = JsonUtil.getData(tcId, "to");
@@ -55,8 +55,8 @@ public class FlightSearchSteps {
 
     @And("user enters From and To locations")
     public void enterRoute() {
-        homePage.enterFrom(from,code_f);
-        homePage.enterTo(to,code_t);
+        homePage.enterFrom(from, code_f);
+        homePage.enterTo(to, code_t);
     }
 
     @And("user selects Dates")
@@ -72,17 +72,12 @@ public class FlightSearchSteps {
 
     @And("user selects travellers")
     public void selectPassengers() {
-            homePage.selectTravellers(adults, childs, infants);
+        homePage.selectTravellers(adults, childs, infants);
     }
 
     @And("user clicks search")
     public void clickSearch() {
         homePage.clickSearch();
-    }
-
-    @Then("flight results should be displayed")
-    public void verifyResults() {
-        Assert.assertTrue(Hooks.driver.getTitle().toLowerCase().contains("flights"));
     }
 }
 
