@@ -1,6 +1,6 @@
 {
   "TC_01": {
-    "username": "admin",
+    "username": "admin@gmail.com",
     "password": "Admin@123",
     "type": "One Way",
     "from": "Mumbai",
@@ -16,7 +16,7 @@
   },
 
   "TC_02": {
-    "username": "admin01",
+    "username": "admin01@gmail.com",
     "password": "Admin@1423",
     "type": "Return",
     "from": "Kolkata",
@@ -32,7 +32,7 @@
   },
 
   "TC_03": {
-    "username": "admin02",
+    "username": "admin02@gmail.com",
     "password": "Admin@173",
     "type": "One Way",
     "from": "Chennai",
