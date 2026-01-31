@@ -21,7 +21,7 @@ public class ResultsPage extends BasePage {
     // ================= LOCATORS =================
 
     // Combined text: "del cgy 03-02-2026"
-    @FindBy(xpath = "//span[@class='title_fetched-time']//strong")
+    @FindBy(xpath = "//span[contains(@class,'title__fetched-time')]/small/strong")
     private WebElement routeText;
 
     // ================= PAGE METHODS =================
