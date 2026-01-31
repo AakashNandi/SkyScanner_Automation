@@ -11,6 +11,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import utilities.ConfigReader;
 
+// Sets up WebDriver before each scenario, opens the specified URL,
+
+
 public class Hooks {
 
     public static WebDriver driver;
@@ -24,7 +27,7 @@ public class Hooks {
         driver.get(url);
     }
 
-    // Screenshot AFTER EVERY STEP (PASS + FAIL)
+    // taking screenshot after every step
     @AfterStep
     public void takeScreenshot(Scenario scenario) {
         byte[] screenshot =
@@ -34,6 +37,7 @@ public class Hooks {
         scenario.attach(screenshot, "image/png", "Step Screenshot");
     }
 
+    //Quits the WebDriver after the scenario is complete.
     @After
     public void tearDown() {
 //        JavascriptExecutor js = (JavascriptExecutor) driver;

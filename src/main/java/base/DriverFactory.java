@@ -5,6 +5,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import utilities.ConfigReader;
 
+// Provides a singleton WebDriver instance based on the browser specified in the configuration file
+// And includes a method to quit and reset the WebDriver.
+
 public class DriverFactory {
 
     private static WebDriver driver;
