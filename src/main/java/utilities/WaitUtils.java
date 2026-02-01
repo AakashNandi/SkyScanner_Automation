@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
+//Implementing different wait methods
+
 public class WaitUtils {
 
         private static WebDriver driver;
@@ -49,19 +51,6 @@ public class WaitUtils {
             //System.out.println("Popup not present, safe to continue");
         }
        }
-
-//       // Utility method to wait for slow typing (when the input field value changes)
-//       public static void waitForInputToUpdate(WebDriver driver, WebElement inputField, long timeoutInMillis) {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(timeoutInMillis));
-//
-//        wait.until(new ExpectedCondition<Boolean>() {
-//            @Override
-//            public Boolean apply(WebDriver driver) {
-//                String currentText = inputField.getAttribute("value");
-//                return currentText.length() > 0 && currentText.length() == currentText.length();
-//            }
-//        });
-//       }
 
       public static void scrollIntoViewCenter(WebElement element) {
         ((JavascriptExecutor) driver)

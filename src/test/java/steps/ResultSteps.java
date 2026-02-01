@@ -12,15 +12,15 @@ public class ResultSteps {
 
         ResultsPage resultsPage = new ResultsPage();
 
-        // ===== Expected data from JSON =====
+        //Expected data from JSON
         String expectedFromCode = JsonUtil.getData(tcId, "code_f").toUpperCase();
         String expectedToCode   = JsonUtil.getData(tcId, "code_t").toUpperCase();
 
-        // ===== Actual data from UI =====
+        // Actual data from UI
         String actualFromCode = resultsPage.getFromAirportCode();
         String actualToCode   = resultsPage.getToAirportCode();
 
-        // ===== Assertions =====
+        // Assertions
         Assert.assertEquals(
                 actualFromCode,
                 expectedFromCode,

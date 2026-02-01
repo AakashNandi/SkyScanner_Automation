@@ -14,12 +14,16 @@ public class LoginPage extends BasePage {
 
         private WaitUtils wait;
 
-        public LoginPage() {
-            super(DriverFactory.getDriver());
-            wait = new WaitUtils(DriverFactory.getDriver());
-        }
+    public LoginPage() {
+        // Calls the parent constructor to initialize WebDriver for common browser interactions in BasePage
+        super(DriverFactory.getDriver());
 
-        // ================= LOCATORS =================
+        // Initializes WaitUtils to handle waiting logic for elements (visibility, clickability) with the same WebDriver
+        wait = new WaitUtils(DriverFactory.getDriver());
+    }
+
+
+    // locators
 
         @FindBy(id = "email")
         WebElement emailInput;
@@ -35,7 +39,6 @@ public class LoginPage extends BasePage {
 
         @FindBy(xpath = "//div[@class='vt-card error']")
         WebElement error;
-        // ================= LOW-LEVEL ACTIONS =================
 
 
         private void enterUsername(String username) {
@@ -53,14 +56,7 @@ public class LoginPage extends BasePage {
             WaitUtils.scrollIntoViewCenter(loginButton);
             WaitUtils.waitForClickable(loginButton).click();
         }
-        // ================= BUSINESS / REAL LOGIC =================
 
-        /**
-         * REAL login flow for dummy site:
-         * 1. Enter credentials
-         * 2. Click login
-         * 3. Force redirect to flights page
-         */
         public void login(String username, String password) {
 
             enterUsername(username);
@@ -77,7 +73,7 @@ public class LoginPage extends BasePage {
 
             System.out.println("Credentials entered and login clicked");
 
-            // site handling: force navigation
+            // site handling redirection
             DriverFactory.getDriver()
                     .get(ConfigReader.getProperty("url_f"));
 

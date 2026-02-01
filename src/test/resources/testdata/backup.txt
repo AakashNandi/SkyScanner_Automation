@@ -1,4 +1,332 @@
 
+//Flight homepage:
+
+//package windows;
+//
+//import base.BasePage;
+//import hooks.Hooks;
+//import org.openqa.selenium.*;
+//import org.openqa.selenium.support.FindBy;
+//import org.openqa.selenium.support.ui.ExpectedCondition;
+//import org.openqa.selenium.support.ui.ExpectedConditions;
+//import org.openqa.selenium.support.ui.WebDriverWait;
+//import utilities.WaitUtils;
+//
+//import java.time.Duration;
+//import java.util.List;
+//
+//public class FlightHomePage extends BasePage {
+//
+//    private WaitUtils wait;
+//
+//    public FlightHomePage() {
+//        super(Hooks.driver);
+//        wait = new WaitUtils(Hooks.driver);
+//    }
+//
+//    //Homepage loaded
+//    @FindBy(xpath = "//button[@role='tab']")
+//    WebElement home;
+//
+//    // Trip type dropdown
+//    @FindBy(xpath = "//select[contains(@class,'flight_way')]")
+//    WebElement tripTypeDropdown;
+//
+//    // Trip type options
+//    @FindBy(xpath = "//select[contains(@class,'flight_way')]/option")
+//    List<WebElement> tripTypeOptions;
+//
+//    // class type dropdown
+//    @FindBy(xpath = "//select[@id='flight_type']")
+//    WebElement classTypeDropdown;
+//
+//    // class type options
+//    @FindBy(xpath = "//select[@id='flight_type']/option")
+//    List<WebElement> classTypeOptions;
+//
+//
+//    // From input
+//    @FindBy(xpath = "//input[@name='from']")
+//    WebElement fromInput;
+//
+//  //  @FindBy(xpath = "//div[@id='onereturn']")
+//    @FindBy(xpath = "//div[@id='onereturn']/div[1]/div/div")
+//    WebElement airportResultsContainer;
+//
+//
+//    // To input
+//    @FindBy(xpath = "//input[@name='to']")
+//    WebElement toInput;
+//
+//    // Departure date button
+//    @FindBy(id = "departure")
+//    WebElement departureDateele;
+//
+//    // Return date button
+//    @FindBy(id = "return_date")
+//    WebElement returnDateele;
+//
+//    // Travellers button
+//    @FindBy(xpath = "//a[@data-toggle='dropdown']")
+//    WebElement travellersBtn;
+//
+////    // Travellers dropdown
+////    @FindBy(xpath = "//div[contains(@class,'dropdown')]/div")
+////    WebElement travellersdrop;
+//
+////    @FindBy(xpath = "//*[@id='fadults']")
+////    WebElement adultCountTextLocator;
+//
+//    @FindBy(xpath = "(//div[input[@id='fadults']])[1]//ancestor::div[contains(@class, 'qtyBtn')]//div[@class='qtyInc']")
+//    WebElement adultSectionElement;
+//
+////    @FindBy(xpath = "//*[@id='fchilds']")
+////    WebElement childCountTextLocator;
+//
+//    @FindBy(xpath = "(//div[input[@id='fchilds']])[1]//ancestor::div[contains(@class, 'qtyBtn')]//div[@class='qtyInc']")
+//    WebElement childSectionElement;
+//
+////    @FindBy(xpath = "//*[@id='finfant']")
+////    WebElement infantCountTextLocator;
+//
+//    @FindBy(xpath = "(//div[input[@id='finfant']])[1]//ancestor::div[contains(@class, 'qtyBtn')]//div[@class='qtyInc']")
+//    WebElement infantSectionElement;
+//
+//    // Search button
+//    @FindBy(xpath = "//button[@id='flights-search']")
+//    WebElement searchBtn;
+//
+////    @FindBy(id = "cookie_disclaimer")
+////    WebElement popup;
+//
+//    // ========================= VERIFICATION ========================= //
+//
+//    public void verifyHomeLoaded() {
+//        //wait.waitForVisible(By.xpath("//button[@role='tab']"));
+//        //WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+//
+//       // WaitUtils.waitForInVisible(popup);
+//        wait.waitForVisible(home);
+//        System.out.println("Flight Home Page Loaded Successfully");
+//    }
+//
+//    //action methods...................
+//
+//    public void selectTripType(String type) {
+//        wait.waitForClickable(tripTypeDropdown).click();
+//
+//        for (WebElement option : tripTypeOptions) {
+//            String text = option.getText().trim();
+//            if (text.equalsIgnoreCase(type)) {
+//                option.click();
+//                break;
+//            }
+//        }
+//    }
+//
+//
+//    public void selectClassType(String cabinClass) {
+//        wait.waitForClickable(classTypeDropdown).click();
+//
+//        for (WebElement option : classTypeOptions) {
+//            String text = option.getText().trim();
+//            if (text.equalsIgnoreCase(cabinClass)) {
+//                option.click();
+//                break;
+//            }
+//        }
+//
+//    }
+//
+//    public void enterFrom(String from, String code_f) {
+//
+//                fromInput.clear();
+//
+//                WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(500)); // Set explicit wait time
+//                // Slow typing: Send each character with an explicit wait for each character typed
+//                for (char c : from.toCharArray()) {
+//                    fromInput.sendKeys(String.valueOf(c));  // Send one character at a time
+//
+//                    // Wait for the input field value to update (waiting for it to change)
+//                    wait.until(new ExpectedCondition<Boolean>() {
+//                        public Boolean apply(WebDriver driver) {
+//                            // Check if the value of the input field has changed (indicating a new character was typed)
+//                            String currentText = fromInput.getAttribute("value");
+//                            return currentText.length() > 0 && currentText.length() == fromInput.getAttribute("value").length();
+//                            //The line ensures that the input field is not empty and that its value has been updated with the typed character.
+//                            // It returns true if both conditions are satisfied, signaling that the typing action is complete.
+//                        }
+//                    });
+//                }
+//
+//                By resultButtonLocator = By.xpath(String.format("//button[contains(text(),'%s')]", code_f));
+//
+//                WebElement select = WaitUtils.waitForPresence(resultButtonLocator);
+//
+//                WaitUtils.waitForVisible(select);
+//
+//                WaitUtils.waitForClickable(select);
+//
+//                WaitUtils.scrollIntoViewCenter(select);
+//
+//                select.click();
+//
+//             }
+//
+//
+//    public void enterTo(String to, String code_t) {
+//        //WaitUtils.dismissBottomPopupIfPresent(By.id("cookie_disclaimer"), By.id("cookie_stop"));
+//
+//        toInput.clear();
+//
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(500));
+//        for (char c : to.toCharArray()) {
+//            toInput.sendKeys(String.valueOf(c));  // Send one character at a time
+//
+//            wait.until(new ExpectedCondition<Boolean>() {
+//                public Boolean apply(WebDriver driver) {
+//                    String currentText = toInput.getAttribute("value");
+//                    return currentText.length() > 0 && currentText.length() == toInput.getAttribute("value").length();
+//                }
+//            });
+//        }
+//
+//        By resultButtonLocator = By.xpath(String.format("//button[contains(text(),'%s')]", code_t));
+//
+//        WebElement select = WaitUtils.waitForPresence(resultButtonLocator);
+//
+//        WaitUtils.waitForVisible(select);
+//
+//        WaitUtils.waitForClickable(select);
+//
+//        WaitUtils.scrollIntoViewCenter(select);
+//
+//        select.click();
+//
+//    }
+//
+//    public void selectDepartureDate(String departureDate) {
+//
+//        WaitUtils.waitForClickable(departureDateele);
+//
+//        departureDateele.clear();
+//
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+//
+//        for (char c : departureDate.toCharArray()) {
+//
+//            departureDateele.sendKeys(String.valueOf(c));
+//
+//            String finalDepartureDate = departureDate;
+//            wait.until(driver -> {
+//
+//                String updatedValue = departureDateele.getAttribute("value");
+//
+//                return updatedValue.length() > 0 && !updatedValue.equals(finalDepartureDate);
+//            });
+//
+//            departureDate = departureDateele.getAttribute("value");
+//        }
+//    }
+//
+//
+//
+//    public void selectDates(String departureDate, String returnDate) {
+//        // Select departure date
+//        selectDate(departureDateele, departureDate);
+//
+//        // Select return date (for multi-way)
+//        selectDate(returnDateele, returnDate);
+//    }
+//
+//    private void selectDate(WebElement dateElement, String date) {
+//        WaitUtils.waitForClickable(dateElement);
+//
+//        dateElement.clear();
+//
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+//
+//        for (char c : date.toCharArray()) {
+//            dateElement.sendKeys(String.valueOf(c));
+//
+//            String finalDate = date;
+//            wait.until(driver -> {
+//                String updatedValue = dateElement.getAttribute("value");
+//                return !updatedValue.equals(finalDate);
+//            });
+//
+//            // Update the date to the latest value after each keypress
+//            date = dateElement.getAttribute("value");
+//            //This ensures that the date variable always reflects the most recent value that has been entered,
+//            // which is helpful for the next iteration of the loop, where the program is waiting for the field to be updated.
+//        }
+//    }
+//
+//public void selectTravellers(String adultCount, String childCount, String infantCount) {
+//
+//    int aC = Integer.parseInt(adultCount);
+//    int cC = Integer.parseInt(childCount);
+//    int iC = Integer.parseInt(infantCount);
+//
+//    WaitUtils.waitForClickable(travellersBtn);
+//    travellersBtn.click();
+//
+//    // Adjust the adult count
+//    WaitUtils.waitForClickable(adultSectionElement);
+//    adjustCount(aC, adultSectionElement);
+//
+//    WaitUtils.waitForClickable(childSectionElement);
+//    // Adjust the child count
+//    adjustCount(cC, childSectionElement);
+//
+//    WaitUtils.waitForClickable(infantSectionElement);
+//    // Adjust the infant count
+//    adjustCount(iC, infantSectionElement);
+//}
+//
+//    private void adjustCount(int targetCount, WebElement sectionElement) {
+//        // Default value based on the section element
+//        int defaultCount = 0; // Default for child and infant
+//        if (sectionElement.equals(adultSectionElement)) {
+//            defaultCount = 1; // Default for adult is 1
+//        }
+//
+//        // Calculate the number of clicks needed
+//        int clicksRequired = targetCount - defaultCount;
+//
+//        // If no clicks are needed, return early
+//        if (clicksRequired <= 0) return;
+//
+//
+//        // Wait until the increment button is clickable
+//        //WebDriverWait wait = new WebDriverWait(driver,  Duration.ofSeconds(10)); // 10 seconds max wait
+////        WebElement incrementButton = sectionElement.findElement(By.cssSelector(".increment-button")); // Adjust this selector
+//
+//        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+//        for (int i = 0; i < clicksRequired; i++) {
+//            // Wait for the increment button to become clickable before clicking
+//            //wait.until(ExpectedConditions.elementToBeClickable(incrementButton));
+//            WaitUtils.waitForClickable(sectionElement);
+//            // Click the increment button
+//          //  sectionElement.click();
+//            jsExecutor.executeScript("arguments[0].click();", sectionElement);
+//            //WaitUtils.waitForClickable(sectionElement);
+//
+//            jsExecutor.executeScript("setTimeout(function(){}, 500);");
+//            // Explicit wait for a minimal delay (500ms)
+//            WaitUtils.waitForClickable(sectionElement); // Ensure the state of the element has changed before next click
+//        }
+//    }
+//
+//    public void clickSearch() {
+//        WaitUtils.waitForClickable(searchBtn);
+//        searchBtn.click();
+//    }
+//}
+
+
+---------------------------------------------------------------------------------------------------------
+
 //    public void selectTravellers(String adultCount, String childCount, String infantCount) {
 //
 //        int aC = Integer.parseInt(adultCount);

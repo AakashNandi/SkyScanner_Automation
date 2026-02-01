@@ -37,8 +37,5 @@ public class LoginSteps {
             LoginPage loginPage = new LoginPage();
             loginPage.login(username, password);
 
-//            // site handling – redirect using config
-//            DriverFactory.getDriver()
-//                    .get(ConfigReader.getProperty("url"));
         }
     }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 
+//to read json file test data
+
 public class JsonUtil {
 
         private static JsonNode testData;
