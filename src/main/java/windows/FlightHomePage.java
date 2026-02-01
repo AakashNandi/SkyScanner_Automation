@@ -107,6 +107,7 @@ public class FlightHomePage extends BasePage {
     }
 
     public void enterFrom(String from, String code_f) {
+        wait.waitForClickable(fromInput);
         fromInput.clear();
         slowType(fromInput, from);
 
@@ -119,6 +120,7 @@ public class FlightHomePage extends BasePage {
     }
 
     public void enterTo(String to, String code_t) {
+        wait.waitForClickable(toInput);
         toInput.clear();
         slowType(toInput, to);
 
